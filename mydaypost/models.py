@@ -6,8 +6,8 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 
-CATEGORY = (('ជីវភាព','ជីវភាព'),('សាលា','សាលា'),('ផ្សេងៗ','ផ្សេងៗ'))
-STATE = (('សកម្ម','សកម្ម'),('រួចរាល់','រួចរាល់'),('ខកខាន','ខកខាន'))
+CATEGORY = (('living','living'),('school','school'),('other','other'))
+STATE = (('ongoing','ongoing'),('done','done'),('missed','missed'))
 
 class TodoModel(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
