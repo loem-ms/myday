@@ -28,7 +28,7 @@
             {% for item in tododate_group.list %}
             <h3 class="card-title"><a href="{% url 'updateTodo'　item.pk %}" >{{ item.title }}</a></h3>
             <h6 class="card-title">{{ item.content }}</h6>
-            <a href="{% url 'deleteTodo' item.pk %}" class="btn btn-primary">ដាក់ឱ្យរួចរាល់</a>
+            <a href="{% url 'deleteTodo' item.pk %}" class="btn btn-primary">ដាក់ឱ្យdone</a>
             <br><br>
             {% endfor %}
             </div>
