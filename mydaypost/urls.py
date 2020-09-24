@@ -1,10 +1,13 @@
 from django.urls import path
-from .views import signupview,loginview,TodoList,AssignmentList,TodoCreate,AssignmentCreate,home,TodoUpdate,AssignmentUpdate,TodoDelete,AssignmentDelete,logoutview
+from .views import signupview,loginview,NewsList,NewsCreate,NewsUpdate,TodoList,AssignmentList,TodoCreate,AssignmentCreate,home,TodoUpdate,AssignmentUpdate,TodoDelete,AssignmentDelete,logoutview
 
 urlpatterns = [
     path('signup/', signupview, name='signup'),
     path('login/', loginview, name='login'),
     path('logout/', logoutview, name='logout'),
+    path('news/', NewsList.as_view(), name='news'),
+    path('createNews/', NewsCreate.as_view(),name='createNews'),
+    path('updateNews/<int:pk>', NewsUpdate.as_view(),name='updateNews'),
     path('list/', TodoList.as_view(), name='list'),
     path('',home,name='home'),
     path('assignment/', AssignmentList.as_view(), name='assignment'),

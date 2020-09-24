@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<div class="jumbotron">
+    <div class="row">
+        <div class="col-sm">
+          <h1 class="display-4">MY DAY</h1>
+          <p class="lead">ទីប្រជុំ Meeting</p>
+        </div>
+        <div class="col-sm">
+          <p class="lead">{{user.username}}</p>
+          <a href="{% url 'home' %}" class="btn btn-primary">ទំព័រការងារ</a>
+          <a href="{% url 'logout' %}" class="btn btn-primary">ចាកចេញ</a>
+        </div>
+</div>
+{% endblock header %}
+
+{% block content %}
+<div class='container'>
+    <a href="{% url 'createNews' %}" class="btn btn-primary">សរសេរដំណឹងថ្មី</a>
+    <br><br>
+        {% for item in object_list %}
+        <div class="card">
+            <div class="card-body">
+            <h3 class="card-title">{{ item.title }}</a></h3>
+            <h7 >By {{ item.author }}    [{{ item.created_at }}]</h7><br><br>
+            <h6 class="card-title">{{ item.content }}</h6>
+            <br><br>
+            </div>
+        </div>
+        {% endfor %}
+</div>
+{% endblock content %}
+
+

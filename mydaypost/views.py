@@ -1,11 +1,13 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.models import User 
 from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView
-from .models import TodoModel, AssignmentModel
+from .models import TodoModel, AssignmentModel, NewsModel
 from django.urls import reverse_lazy
 from django.db import IntegrityError
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+import datetime
+
 
 
 # Create your views here.
@@ -61,14 +63,15 @@ class TodoCreate(CreateView):
 class AssignmentCreate(CreateView):
     template_name = 'createAssignment.html'
     model = AssignmentModel
-    fields = ('title','content','author','state','deadline')
+    fields = ('title','content','author','deadline')
     success_url = reverse_lazy('home')
 
 @login_required
 def home(request):
     todo = TodoModel.objects.filter(author=request.user)
     assignment = AssignmentModel.objects.filter(author=request.user)
-    return render(request,"home.html",{"TodoModel":todo,"AssignmentModel":assignment})
+    datetimenow = datetime.date.today()
+    return render(request,"home.html",{"TodoModel":todo,"AssignmentModel":assignment,"datetimenow":datetimenow})
 
 class TodoDelete(DeleteView):
     template_name = 'deleteTodo.html'
@@ -89,5 +92,22 @@ class AssignmentDelete(DeleteView):
 class AssignmentUpdate(UpdateView):
     template_name = 'updateAssignment.html'
     model = AssignmentModel
-    fields = ('title','content','state','deadline')
+    fields = ('title','content','deadline')
     success_url = reverse_lazy('assignment')
+
+class NewsList(ListView):
+    template_name = 'newslist.html'
+    model = NewsModel
+
+class NewsCreate(CreateView):
+    template_name = 'createNews.html'
+    model = NewsModel
+    fields = ('title','author','content')
+    success_url = reverse_lazy('news')
+
+class NewsUpdate(UpdateView):
+    template_name = 'updateNews.html'
+    model = NewsModel
+    fields = ('title','content')
+    success_url = reverse_lazy('list')
+

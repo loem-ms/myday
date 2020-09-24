@@ -2,9 +2,17 @@
 
 {% block header %}
 <div class="jumbotron">
-    <h1 class="display-4">បញ្ជីការងារសាលា</h1>
-    <p class="lead">Assignment List</p>
-    <p class="lead"><a href="{% url 'home' %}">{{user.username}}</a></p>
+    <div class="row">
+        <div class="col-sm">
+          <h1 class="display-4">MY DAY</h1>
+          <p class="lead">បញ្ជីការងារសាលា Assignment List</p>
+        </div>
+        <div class="col-sm">
+          <p class="lead">{{user.username}}</p>
+          <a href="{% url 'list' %}" class="btn btn-primary">បញ្ជីកិច្ចការត្រូវធ្វើ</a>
+          <a href="{% url 'home' %}" class="btn btn-primary">ទំព័រដើម</a>
+          <a href="{% url 'logout' %}" class="btn btn-primary">ចាកចេញ</a>
+        </div>
 </div>
 {% endblock header %}
 
@@ -13,20 +21,23 @@
     <a href="{% url 'createAssignment' %}" class="btn btn-primary">បន្ថែមកិច្ចការថ្មី</a>
     <br><br>
 
-    {% regroup object_list by state as todo_list %}
-        {% for state_group in todo_list %}
+    
         <div class="card">
-            <h5 class="card-header">{{state_group.grouper}}</h5>
             <div class="card-body">
-            {% for item in state_group.list %}
+            {% for item in object_list %}
             <h3 class="card-title"><a href="{% url 'updateAssignment'　item.pk %}" >{{ item.title }}</a></h3>
-            <h6 class="card-title">{{ item.deadline }}</h6>
+            {% if item.is_end_date %}
+            <h6 class="card-title" ><font color="red">ខកខាន​ {{ item.deadline }}</font></h6>
+            {% else %}
+            <h6 class="card-title"><font color="blue">សកម្ម {{ item.deadline }}</font></h6>
+            {% endif %}
+            
             <h6 class="card-title">{{ item.content }}</h6>
             <a href="{% url 'deleteAssignment' item.pk %}" class="btn btn-primary">លុបចោល</a>
+            <br><br>
             {% endfor %}
             </div>
         </div>
-        {% endfor %}
 </div>
 {% endblock content %}
 

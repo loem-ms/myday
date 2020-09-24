@@ -2,9 +2,17 @@
 
 {% block header %}
 <div class="jumbotron">
-    <h1 class="display-4">បញ្ជីការងារត្រូវធ្វើ</h1>
-    <p class="lead">To-do List</p>
-    <p class="lead"><a href="{% url 'home' %}">{{user.username}}</a></p>
+    <div class="row">
+        <div class="col-sm">
+          <h1 class="display-4">MY DAY</h1>
+          <p class="lead">បញ្ជីការងារត្រូវធ្វើ To-do List</p>
+        </div>
+        <div class="col-sm">
+          <p class="lead">{{user.username}}</p>
+          <a href="{% url 'assignment' %}" class="btn btn-primary">បញ្ជីការងារសាលា</a>
+          <a href="{% url 'home' %}" class="btn btn-primary">ទំព័រដើម</a>
+          <a href="{% url 'logout' %}" class="btn btn-primary">ចាកចេញ</a>
+        </div>
 </div>
 {% endblock header %}
 
