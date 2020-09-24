@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<div class="jumbotron">
+    <h1 class="display-4">MyDay</h1>
+    <p class="lead">សូមស្វាគមន៍មកកាន់MyDay!</p>
+</div>
+{% endblock header %}
+
+{% block content %}
+<div class="container">
+<form class="form-signin" method='post'>{% csrf_token %}
+    <h1 class="h3 mb-3 font-weight-normal">សូមធ្វើការបញ្ចូលឈ្មោះនិងកូដសម្ងាត់របស់អ្នក</h1>
+    {% if error %}
+    {{ error }}
+    {% endif %}
+    <label for="inputEmail" class="sr-only">Username</label>
+    <input type="text" id="inputEmail" class="form-control" placeholder="ឈ្មោះគណនី Username" name="username_data" required autofocus>
+    <label for="inputPassword" class="sr-only">Password</label>
+    <input type="password" id="inputPassword" class="form-control" placeholder="កូដសម្ងាត់ Password" name="password_data" required>
+    <div class="checkbox mb-3">
+    </div>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">ចូលប្រើប្រាស់ Sign in</button>
+    <p>លោកអ្នកមិនទាន់ក្លាយជាសមាជិកទេឬ? Not a member?</p>
+    <a href="{% url 'signup' %}" class="btn btn-primary">ចុះឈ្មោះប្រើប្រាស់ Sign up</a>
+    <p class="mt-5 mb-3 text-muted">&copy; M.S LOEM, 2020-2022</p>
+  </form>
+</div>
+{% endblock content %}

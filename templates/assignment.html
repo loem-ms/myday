@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<div class="jumbotron">
+    <h1 class="display-4">បញ្ជីការងារសាលា</h1>
+    <p class="lead">Assignment List</p>
+    <p class="lead"><a href="{% url 'home' %}">{{user.username}}</a></p>
+</div>
+{% endblock header %}
+
+{% block content %}
+<div class='container'>
+    <a href="{% url 'createAssignment' %}" class="btn btn-primary">បន្ថែមកិច្ចការថ្មី</a>
+    <br><br>
+
+    {% regroup object_list by state as todo_list %}
+        {% for state_group in todo_list %}
+        <div class="card">
+            <h5 class="card-header">{{state_group.grouper}}</h5>
+            <div class="card-body">
+            {% for item in state_group.list %}
+            <h3 class="card-title"><a href="{% url 'updateAssignment'　item.pk %}" >{{ item.title }}</a></h3>
+            <h6 class="card-title">{{ item.deadline }}</h6>
+            <h6 class="card-title">{{ item.content }}</h6>
+            <a href="{% url 'deleteAssignment' item.pk %}" class="btn btn-primary">លុបចោល</a>
+            {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+</div>
+{% endblock content %}
+
+

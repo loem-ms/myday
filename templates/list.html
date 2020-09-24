@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<div class="jumbotron">
+    <h1 class="display-4">បញ្ជីការងារត្រូវធ្វើ</h1>
+    <p class="lead">To-do List</p>
+    <p class="lead"><a href="{% url 'home' %}">{{user.username}}</a></p>
+</div>
+{% endblock header %}
+
+{% block content %}
+<div class='container'>
+    <a href="{% url 'createTodo' %}" class="btn btn-primary">បន្ថែមការងារថ្មី</a>
+    <br><br>
+    {% regroup object_list by tododate as todo_list %}
+        {% for tododate_group in todo_list %}
+        <div class="card">
+            <h5 class="card-header">{{tododate_group.grouper}}</h5>
+            <div class="card-body">
+            {% for item in tododate_group.list %}
+            <h3 class="card-title"><a href="{% url 'updateTodo'　item.pk %}" >{{ item.title }}</a></h3>
+            <h6 class="card-title">{{ item.content }}</h6>
+            <a href="{% url 'deleteTodo' item.pk %}" class="btn btn-primary">ដាក់ឱ្យរួចរាល់</a>
+            <br><br>
+            {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+</div>
+{% endblock content %}
+
+

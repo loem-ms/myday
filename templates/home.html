@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<div class="jumbotron">
+    <h1 class="display-4">MY DAY</h1>
+    <p class="lead">រីករាយថ្ងៃថ្មី</p>
+    <p class="lead">{{user.username}}</p>
+    <a href="{% url 'logout' %}" class="btn btn-primary">ចាកចេញ</a>
+  </div>
+{% endblock header %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+      <div class="col-sm">
+          <h3><a href="{% url 'list' %}">បញ្ជីការងារត្រូវធ្វើ</a></h3>
+          <a href="{% url 'createTodo' %}" class="btn btn-primary">បន្ថែមការងារថ្មី</a>
+          {% regroup TodoModel by category as todo_list %}
+        {% for category_group in todo_list %}
+        <div class="card">
+            <h5 class="card-header">{{category_group.grouper}}</h5>
+            <div class="card-body">
+            {% for item in category_group.list %}
+              <h5 class="card-title">{{ item.title }}</h5>
+            {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+      </div>
+      <div class="col-sm">
+        <h3><a href="{% url 'assignment' %}">បញ្ជីកិច្ចការសាលា</a></h3>
+        <a href="{% url 'createAssignment' %}" class="btn btn-primary">បន្ថែមកិច្ចការថ្មី</a>
+        {% regroup AssignmentModel by state as assignment_list %}
+        {% for state_group in assignment_list %}
+        <div class="card">
+            <h5 class="card-header">{{ state_group.grouper}}</h5>
+            <div class="card-body">
+            {% for item in state_group.list %}
+              <h5 class="card-title">{{ item.title }}</h5>
+              <h6 class="card-title" style="color:red">DeadLine: {{ item.deadline}}</h6>
+            {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+<div class='container'>
+    
+
+
+{% endblock content %}
+
+
