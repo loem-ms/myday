@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<script type="text/javascript" src="reload.js"></script>
+
+{% block header %}
+<div class="jumbotron">
+    <div class="row">
+        <div class="col-sm">
+          <h1 class="display-4">MY DAY</h1>
+          <a href="{% url 'news' %}" class="btn btn-primary">ទីប្រជុំ - ដំណឹង</a>
+        </div>
+        <div class="col-sm">
+          <p class="lead">{{user.username}}</p>
+          
+          <a href="{% url 'home' %}" class="btn btn-primary">បញ្ជីការងារ</a>
+          <a href="{% url 'logout' %}" class="btn btn-primary">ចាកចេញ</a>
+        </div>
+    </div>
+</div>
+{% endblock header %}
+
+{% block content %}
+    <div class='container'>
+        <div class="card">
+            <h5 class="card-header">{{ news.title }}</h5>
+            <div class="card-body">
+                <h7 >By {{ news.author }}    [{{ news.created_at }}]</h7><br><br>          
+                <p>{{ news.content }}</p>
+                {% if owner %}
+                <a href="{% url 'deleteNews' news.pk%}" class="btn btn-primary">លុបចោល</a>
+                {% endif %}
+            </div>
+        </div>
+        <div class="card">
+            <h5 class="card-header">Comments</h5>
+            <div class="card-body">  
+            {% for item in comments %}
+                <p><font color="blue">{{item.author}} </font>: {{ item.content }}</p>
+            {% endfor %}
+            
+        </div>
+        </div>
+
+        <br><br>
+        {% load widget_tweaks %}
+        <form action="{% url 'comment_create' news.pk%}" method='POST' enctype="multipart/form-data">{% csrf_token %}
+            <div class='form-group'>
+                <label for='comment' class="col-sm-4 control-label">Comment:</label>
+                <div class='col-sm-8'>{{form.content|add_class:"form-control"|attr:"cols:40"|attr:"rows:5"}}</div>
+            </div>
+            <button type="submit" class="btn btn-primary">Post</button>
+        </form>
+    </div>
+{% endblock content %}

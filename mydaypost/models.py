@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 
-CATEGORY = (('ជីវភាព','ជីវភាព'),('សាលា','សាលា'),('ផ្សេងៗ','ផ្សេងៗ'))
+CATEGORY = (('life','life'),('school','school'),('other','other'))
 
 class TodoModel(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -50,3 +50,15 @@ class NewsModel(models.Model):
 
     def __str__(self):
         return self.title
+
+class CommentModel(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    news = models.ForeignKey(NewsModel, on_delete=models.CASCADE)
+    content = models.TextField()
+    class Meta:
+        ordering = ['created_at']
+
+    def __str__(self):
+        return self.content

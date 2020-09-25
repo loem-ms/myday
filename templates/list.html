@@ -6,13 +6,16 @@
         <div class="col-sm">
           <h1 class="display-4">MY DAY</h1>
           <p class="lead">បញ្ជីការងារត្រូវធ្វើ To-do List</p>
+          <a href="{% url 'home' %}" class="btn btn-primary">ទំព័រដើម</a>
+          <a href="{% url 'news' %}" class="btn btn-primary">ទីប្រជុំ</a>
         </div>
         <div class="col-sm">
           <p class="lead">{{user.username}}</p>
           <a href="{% url 'assignment' %}" class="btn btn-primary">បញ្ជីការងារសាលា</a>
-          <a href="{% url 'home' %}" class="btn btn-primary">ទំព័រដើម</a>
+
           <a href="{% url 'logout' %}" class="btn btn-primary">ចាកចេញ</a>
         </div>
+    </div>
 </div>
 {% endblock header %}
 

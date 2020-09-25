@@ -1,7 +1,9 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect, get_object_or_404
+from django.views.decorators.http import require_POST
 from django.contrib.auth.models import User 
 from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView
-from .models import TodoModel, AssignmentModel, NewsModel
+from .models import TodoModel, AssignmentModel, NewsModel, CommentModel
+from .forms import CommentCreateForm
 from django.urls import reverse_lazy
 from django.db import IntegrityError
 from django.contrib.auth import authenticate, login, logout
@@ -111,3 +113,36 @@ class NewsUpdate(UpdateView):
     fields = ('title','content')
     success_url = reverse_lazy('list')
 
+class NewsDelete(DeleteView):
+    template_name = 'deleteNews.html'
+    model = NewsModel
+    success_url = reverse_lazy('news')
+
+def newsdetailview(request,pk):
+    news = get_object_or_404(NewsModel,pk=pk)
+    owner = (news.author == request.user)
+    comments = CommentModel.objects.filter(news=news)
+    context = {
+        'news':news,
+        'comments':comments,
+        'owner':owner,
+        'form': CommentCreateForm()
+    }
+    return render(request, 'newsdetail.html',context)
+
+@require_POST
+def create_comment(request, pk):
+    form = CommentCreateForm(request.POST)
+    if form.is_valid():
+        comment = form.save(commit=False)
+        comment.news = get_object_or_404(NewsModel, pk=pk)
+        comment.author = request.user
+        comment.save()
+        redirect_page = '/newsdetail/'+str(pk)
+        return redirect(redirect_page)
+ 
+    context = {
+        'comments': CommentModel.objects.filter(news=get_object_or_404(NewsModel,pk=pk)),
+        'form': form,
+    }
+    return render(request, 'newsdetail.html', context)

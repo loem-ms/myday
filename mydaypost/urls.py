@@ -1,5 +1,6 @@
 from django.urls import path
-from .views import signupview,loginview,NewsList,NewsCreate,NewsUpdate,TodoList,AssignmentList,TodoCreate,AssignmentCreate,home,TodoUpdate,AssignmentUpdate,TodoDelete,AssignmentDelete,logoutview
+from django.conf.urls import url
+from .views import signupview,loginview,NewsList,NewsCreate,NewsUpdate,newsdetailview,NewsDelete,create_comment,TodoList,AssignmentList,TodoCreate,AssignmentCreate,home,TodoUpdate,AssignmentUpdate,TodoDelete,AssignmentDelete,logoutview
 
 urlpatterns = [
     path('signup/', signupview, name='signup'),
@@ -8,6 +9,9 @@ urlpatterns = [
     path('news/', NewsList.as_view(), name='news'),
     path('createNews/', NewsCreate.as_view(),name='createNews'),
     path('updateNews/<int:pk>', NewsUpdate.as_view(),name='updateNews'),
+    path('newsdetail/<int:pk>', newsdetailview, name='newsdetail'),
+    path('deleteNews/<int:pk>', NewsDelete.as_view(),name='deleteNews'),
+    url("^comment_create/(?P<pk>\d+)/$",create_comment,name='comment_create'),
     path('list/', TodoList.as_view(), name='list'),
     path('',home,name='home'),
     path('assignment/', AssignmentList.as_view(), name='assignment'),

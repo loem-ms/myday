@@ -22,7 +22,7 @@
         {% for item in object_list %}
         <div class="card">
             <div class="card-body">
-            <h3 class="card-title">{{ item.title }}</a></h3>
+            <h3 class="card-title"><a href="{% url 'newsdetail' item.pk %}">{{ item.title }}</a></h3>
             <h7 >By {{ item.author }}    [{{ item.created_at }}]</h7><br><br>
             <h6 class="card-title">{{ item.content }}</h6>
             <br><br>
